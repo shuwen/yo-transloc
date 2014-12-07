@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+	</head>
+	<body>
+
+		<div id="container"></div>
+
+		<form action="">
+		</form>
+
+		<script src="bower_components/jquery/dist/jquery.min.js"></script>
+		<script src="bower_components/jQuery-Geolocation/jquery.geolocation.min.js"></script>
+		<script>
+
+		function sleep(milliseconds) {
+		  var start = new Date().getTime();
+		  for (var i = 0; i < 1e7; i++) {
+		    if ((new Date().getTime() - start) > milliseconds){
+		      break;
+		    }
+		  }
+}
+
+		var yo = function() {
+			console.log('yo');
+			$.ajax({
+				'method': 'POST',
+				'url': 'http://api.justyo.co/yo/',
+				'data': {
+					'api_token': '***REMOVED***',
+					'username': 'shuwenq'
+				}
+			});
+		}
+
+		var find_bus = function() {
+			$.ajax({
+				'method': 'GET',
+				'dataType': 'json',
+				'timeout': 100000,
+				'headers': {
+					'X-Mashape-Key': '***REMOVED***',
+				},
+				'url': 'https://transloc-api-1-2.p.mashape.com/arrival-estimates.json?agencies=100&stops='+stop,
+
+				'success': function(res) {
+					// console.log('it works 2');
+					if ( (Date.parse(res.data[0].arrivals[0].arrival_at) - Date.now() ) < 240000 ) {
+						yo();
+					} else {
+						console.log('no');
+						sleep(10000);
+						find_bus();
+						// setTimeout(find_bus(), 120000);
+					}
+				},
+				'error': function(err) {
+						sleep(10000);
+					find_bus();
+					// setTimeout(find_bus(), 120000);
+				}
+			});
+		}
+
+		$.geolocation.get({
+			success: function(loc) {
+				console.log(loc.coords.latitude + 0.003);
+				console.log(loc.coords.longitude - 0.003);
+				console.log('\n');
+				console.log(loc.coords.latitude - 0.003);
+				console.log(loc.coords.longitude + 0.003);
+
+
+			$.ajax({
+				'method': 'GET',
+				'dataType': 'json',
+				'headers': {
+					'X-Mashape-Key': '***REMOVED***',
+				},
+				'url': 'https://transloc-api-1-2.p.mashape.com/stops.json?agencies=100&geo_area='+(loc.coords.latitude + 0.003)+','+(loc.coords.longitude - 0.003)+'|'+(loc.coords.latitude - 0.003)+','+(loc.coords.longitude + 0.003),
+
+				'success': function(res) {
+					console.log('it works');
+					console.log( res.data );
+
+					$.each(res.data, function(index,value) {
+						$('#container').append('<input type="radio" name="stop" value="'+value.stop_id+'">'+value.name+'<br />');
+					});
+
+					$('input').click(function() {
+						stop = this.value;
+
+						find_bus();
+
+
+					});
+				}
+			});
+
+			}
+		});
+
+		</script>
+	</body>
+</html>
