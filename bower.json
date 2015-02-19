@@ -1,0 +1,17 @@
+{
+  "name": "yo-transloc",
+  "version": "0.0.0",
+  "homepage": "https://github.com/shuwen/yo-transloc",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jQuery-Geolocation": "manuelbieh/jQuery-Geolocation"
+  }
+}

@@ -1,0 +1,19 @@
+extends layout
+
+block content
+	input(type='button',value='Get Location',id='locate')
+	span(id='location')="No information available"
+
+	hr
+
+	select#buses
+
+	hr
+
+	span= "Alert me in"
+	input#time(type='text')
+	span= "minutes"
+	
+	input#submit(type='submit')
+
+	input#test(type='button',value='Test Event')

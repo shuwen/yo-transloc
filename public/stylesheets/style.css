@@ -1,0 +1,17 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+#locate {
+	background: transparent;
+	box-shadow: none;
+	border: 3px solid #666;
+	font-size: 28px;
+	outline: none;
+	text-align: center;
+}
