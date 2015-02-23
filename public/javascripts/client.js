@@ -32,7 +32,7 @@
 	$('#submit').click(function() {
 		socket.emit('watch', {
 			bus: $('#buses').val(),
-			time: parseInt($('#time').val())
+			t: parseInt($('#time').val())
 		});
 	});
 
