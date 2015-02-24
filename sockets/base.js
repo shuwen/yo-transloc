@@ -1,4 +1,3 @@
-// var http = require('http'),
 var unirest = require('unirest'),
 	sleep = require('sleep'),
 	querystring = require('querystring');
@@ -13,37 +12,29 @@ module.exports = function(io) {
 
 		socket.on('watch', function(d) {
 			var f = false;
-			findBus(d.bus);
-			while(!f) {
-				console.log('calling findBus()');
-				f = findBus(d.bus);
-				console.log('sleeping 30');
-				sleep.sleep(30);
-			}
-			if(f) {
-				console.log('it works');
-			}
+			findBus(d.bus, socket);
 		});
 
 	});
-
-	function findBus(id) {
-		var busFound = false;
-
-		var request = unirest.get("https://transloc-api-1-2.p.mashape.com/arrival-estimates.json?agencies=100&stops="+id)
-		.header("X-Mashape-Key", "***REMOVED***")
-		.header("Accept", "application/json")
-		.end(function (res) {
-			console.log(res.body);
-			console.log('findBus(), within http callback');
-			console.log(res.body.data[0].arrivals[0].arrival_at);
-
-			if ( (Date.parse(res.body.data[0].arrivals[0].arrival_at) - Date.now() ) < 240000 ) {
-				socket.emit('bus', {});
-				busFound = true;
-			}
-		});
-
-		return busFound;
-	};
 }
+
+/**
+ * Helper function that queries API until true
+ */
+function findBus(id, soc) {
+	var busFound = false;
+	var reqPath = "https://transloc-api-1-2.p.mashape.com/arrival-estimates.json?agencies=100&stops="+id;
+
+	var request = unirest.get(reqPath)
+	.header("X-Mashape-Key", "***REMOVED***")
+	.header("Accept", "application/json")
+	.end(function (res) {
+		if ( (Date.parse(res.body.data[0].arrivals[0].arrival_at) - Date.now() ) < 240000 ) {
+			soc.emit('bus', {});
+			return busFound;
+		} else {
+			sleep.sleep(60);
+			findBus(id);
+		}
+	});
+};

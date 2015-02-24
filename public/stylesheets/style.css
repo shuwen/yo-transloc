@@ -63,6 +63,7 @@ input[type="submit"]:active {
 	color: #fff;
 	font-size: 25px;
 	margin: 0 .5em;
+	padding: .25em;
 	text-align: center;
-	width: 3em;
+	width: 2em;
 }
