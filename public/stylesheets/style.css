@@ -52,20 +52,23 @@ input[disabled]:active {
 	margin: 0 auto 2em;
 }
 
-#timer {
+#timer,
+#yo {
 	color: #fff;
 	display: block;
 	margin: auto;
 	text-align: center;
 }
 
-#timer span {
+#timer span,
+#yo span {
 	display: block;
 	line-height: 37px;
 	vertical-align: middle;
 }
 
-#time {
+#time,
+#handle {
 	background-color: #004B8D;
 	border: none;
 	border-radius: 5px;
@@ -74,5 +77,8 @@ input[disabled]:active {
 	margin: 0 .5em;
 	padding: .25em;
 	text-align: center;
+}
+
+#time {
 	width: 2em;
 }

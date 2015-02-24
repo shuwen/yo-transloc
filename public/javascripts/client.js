@@ -39,19 +39,40 @@
 
 	// Get the server to emit a test event back to us
 	$('#test').click(function() {
-		socket.emit('test', {});
+		var user = $('#handle').val();
+		yo(user);
 	});
 
 	// Server will respond when there is a bus
 	socket.on('bus', function() {
-		alert('it works, there is a bus');
 		flashTitle();
+		var user = $('#handle').val();
+		yo(user);
 	});
 
-	// Implement this later
+	// Flash the page title
 	function flashTitle() {
-		var oldTitle = document.title;
-		var newTitle = 'Yo!';
+		var title = $('title');
+
+		var oldTitle = title.text();
+		var newTitle = 'Get ready for the bus!';
+
+		setInterval(function() {
+			if(title.text() == oldTitle)
+				title.text(newTitle);
+			else
+				title.text(oldTitle);
+		}, 900);
 	}
 
+	function yo(user) {
+		$.ajax({
+			type: 'POST',
+			url: 'http://api.justyo.co/yo/',
+			data: {
+				'api_token': '',
+				'username': user
+			}
+		});
+	}
 })();
