@@ -70,7 +70,7 @@
 			type: 'POST',
 			url: 'http://api.justyo.co/yo/',
 			data: {
-				'api_token': '',
+				'api_token': '***REMOVED***',
 				'username': user
 			}
 		});
