@@ -2,18 +2,15 @@ extends layout
 
 block content
 	input(type='button',value='Get Location',id='locate')
-	span(id='location')="No information available"
-
-	hr
+	div(id='location')="No information available"
 
 	select#buses
 
-	hr
-
-	span= "Alert me in"
-	input#time(type='text')
-	span= "minutes"
+	div#timer
+		span= "Alert me in"
+		input#time(type='text')
+		span= "minutes"
 	
-	input#submit(type='submit')
+	input#submit(type='submit',value="Submit")
 
 	input#test(type='button',value='Test Event')
