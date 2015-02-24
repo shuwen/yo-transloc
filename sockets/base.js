@@ -12,7 +12,7 @@ module.exports = function(io) {
 
 		socket.on('watch', function(d) {
 			var f = false;
-			findBus(d.bus, socket);
+			findBus(d.bus, d.t, socket);
 		});
 
 	});
@@ -21,7 +21,7 @@ module.exports = function(io) {
 /**
  * Helper function that queries API until true
  */
-function findBus(id, soc) {
+function findBus(id, t, soc) {
 	var busFound = false;
 	var reqPath = "https://transloc-api-1-2.p.mashape.com/arrival-estimates.json?agencies=100&stops="+id;
 
@@ -29,7 +29,7 @@ function findBus(id, soc) {
 	.header("X-Mashape-Key", "***REMOVED***")
 	.header("Accept", "application/json")
 	.end(function (res) {
-		if ( (Date.parse(res.body.data[0].arrivals[0].arrival_at) - Date.now() ) < 240000 ) {
+		if ( (Date.parse(res.body.data[0].arrivals[0].arrival_at) - Date.now() ) < t*60000 ) {
 			soc.emit('bus', {});
 			return busFound;
 		} else {
