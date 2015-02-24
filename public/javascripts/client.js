@@ -22,6 +22,7 @@
 						$.each(res.data, function(index,value) {
 							$('#buses').append('<option value="'+value.stop_id+'">'+value.name+'</option>');
 						});
+						$('#submit').prop('disabled',false);
 					} // end of ajax success function
 				}); // end of ajax call
 			}, // success

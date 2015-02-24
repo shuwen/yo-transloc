@@ -31,6 +31,15 @@ input[type="submit"]:active {
 	top: 4px;
 }
 
+input[disabled],
+input[disabled]:active {
+	background-color: #1C588D;
+	box-shadow: 0 1px 0 #163A5A;
+	color: #ddd;
+	position: relative;
+	top: 6px;
+}
+
 #location {
 	color: #fff;
 	font-size: .8em;
